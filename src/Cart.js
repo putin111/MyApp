@@ -13,7 +13,6 @@ class Cart extends Component<{}> {
     const { container1, container1Text, container, product, img, name, price,
       dau, icon, total, totaltext, btndel } = styles;
     const url = "http://dongthappro.vn/images/";
-    console.log(this.props);
     var kq = 0;
     for(var i = 0 ; i < this.props.products.length; i++)
     {
@@ -61,13 +60,19 @@ class Cart extends Component<{}> {
             }
           </ScrollView>
           <View style={total}>
-            <Text style={totaltext}>Total: {kq}.000 VNĐ</Text>
+            <Text style={totaltext}>Total: {numberWithCommas(kq)}.000 VNĐ</Text>
           </View>
         </View>
     );
   }
 }
-
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1.$2");
+    return x;
+}
 const styles = StyleSheet.create({
   container1:{
     flex: 1,

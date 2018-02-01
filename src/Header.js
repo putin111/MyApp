@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, Image, Dimensions, ImageBackground, TouchableOpacity
+  StyleSheet, Text, View, Image, Dimensions, ImageBackground, TouchableOpacity, AsyncStorage
 } from 'react-native';
 
 import menu from './images/menu.png';
@@ -8,6 +8,17 @@ import besen from './images/besen.png';
 import search from './images/search.png';
 
 export default class Header extends Component<{}> {
+  get = async()=>{
+    try {
+      var email = await AsyncStorage.getItem("@EMAIL");
+      console.log(email);
+    } catch (e) {
+
+    } finally {
+
+    }
+
+  }
   render() {
     const { header, icon, logo } = styles;
     const {navigate} = this.props.navigation;
@@ -16,7 +27,7 @@ export default class Header extends Component<{}> {
           <TouchableOpacity onPress={this.props.openMenu}>
             <Image style={icon} source={menu} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Cart')}>
+          <TouchableOpacity onPress={() => {this.get()}}>
           <Image style={logo} source={besen} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigate('Search')}>

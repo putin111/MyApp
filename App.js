@@ -6,6 +6,7 @@ import ProductByCategory from './src/ProductByCategory';
 import ProductDetail from './src/ProductDetail';
 import Cart from './src/Cart';
 import MainContentCart from './src/MainContentCart';
+import Register from './src/Register';
 
 const App = StackNavigator(
   {
@@ -29,6 +30,9 @@ const App = StackNavigator(
     },
     MainContentCart: {
       screen: MainContentCart,
+    },
+    Register: {
+      screen: Register,
     },
   }, {
     headerMode: 'none',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image,
+import { View, StyleSheet, Text, TouchableOpacity, Image, AsyncStorage,
   ImageBackground, Dimensions, ScrollView } from 'react-native';
 
 import menubackground from './images/menubackground.jpg';
@@ -31,18 +31,29 @@ export default class Menu extends Component {
       );
   }
   render() {
-    const { container, header, center, user, userimg, usertext, slogan,
+    const { container, header, center, user, userimg, usertext, slogan, headertop,
       category, dm, text, title } = styles;
     const url = "http://dongthappro.vn/images/";
     const { navigate } = this.props.navigation;
     return (
       <ScrollView style={container}>
         <View style={header}>
-            <View style={user}>
-              <Image style={userimg} source={avatar} />
-              <Text style={usertext}>Trương Lâm Tuấn</Text>
-              <Text style={slogan}>Đồng tháp thuần khiết như hồn sen</Text>
+            <View style={headertop}>
+              <View style={user}>
+                <Image style={userimg} source={avatar} />
+                <Text style={usertext}>Trương Lâm Tuấn</Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+                <TouchableOpacity onPress={() => navigate('User')}>
+                  <Text style={usertext}>Đăng ký</Text>
+                </TouchableOpacity>
+                <Text style={usertext}> | </Text>
+                <TouchableOpacity onPress={() => navigate('Login')}>
+                  <Text style={usertext}>Đăng nhập</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+            <Text style={slogan}>Đồng tháp thuần khiết như hồn sen</Text>
         </View>
         <View style={center}>
           <View style={category}>
@@ -77,9 +88,14 @@ const styles = StyleSheet.create({
   center:{
     flex:3,
   },
+  headertop:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    margin: 10,
+  },
   user:{
-    paddingLeft:10,
-    paddingTop:10,
+    //paddingLeft:10,
+    //paddingTop:10,
   },
   userimg:{
     width: 60,
@@ -97,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize:14,
     //fontWeight:'bold',
     //fontStyle:'italic',
+    textAlign:'center',
     paddingTop: 15,
     fontFamily: 'Lobster-Regular',
   },

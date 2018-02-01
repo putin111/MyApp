@@ -1,14 +1,14 @@
 import { TabNavigator } from 'react-navigation';
 
-import Contact1 from './Contact1';
-import Contact2 from './Contact2';
+import Login from './Login';
+import Register from './Register';
 
-const Contact = TabNavigator({
-  Contact1: {
-    screen: Contact1,
+const MainUser = TabNavigator({
+  Login: {
+    screen: Login,
   },
-  Contact2: {
-    screen: Contact2,
+  Register: {
+    screen: Register,
   },
   }, {
     tabBarPosition: 'top',
@@ -29,4 +29,4 @@ const Contact = TabNavigator({
   },
   });
 
-export default Contact;
+export default MainUser;

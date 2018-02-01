@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator, FlatList, Dimensions,
+  StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator, FlatList, Dimensions, ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addProduct } from './actions';
@@ -54,7 +54,6 @@ class ProductByCategory extends Component<{}> {
     const { container, header, icon, title, badge } = styles;
     const { goBack, navigate, state } = this.props.navigation;
     const { dataProduct } = this.state;
-      console.log(this.props);
     return (
       <View style={container}>
       <View style={header}>
@@ -72,7 +71,7 @@ class ProductByCategory extends Component<{}> {
         </View>
       </View>
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
             {
               this.state.isFetching ? this.renderActivityIndicator() :
               <FlatList
@@ -82,7 +81,7 @@ class ProductByCategory extends Component<{}> {
                   numColumns={2}
               />
             }
-          </View>
+          </ScrollView>
       </View>
     );
   }

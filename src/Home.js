@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, Image, Dimensions, ImageBackground
+  StyleSheet, Text, View, Image, Dimensions, ImageBackground, AsyncStorage
 } from 'react-native';
 
 import Header from './Header';
@@ -16,6 +16,7 @@ export default class Home extends Component<{}> {
   openControlPanel = () => {
     this.drawer.open();
   };
+  
   render() {
     const { container } = styles;
     return (
