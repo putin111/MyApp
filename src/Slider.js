@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   StyleSheet, Text, View, Image, Dimensions, ImageBackground
 } from 'react-native';
-
 import Swiper from 'react-native-swiper';
 
 import slider1 from './images/slider1.jpg';

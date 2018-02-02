@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, View, Text } from 'react-native';
+import { AppRegistry, StyleSheet, View, Text, StatusBar } from 'react-native';
 import App from './App';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
@@ -21,6 +21,7 @@ export default class AppContainer extends Component<{}>{
               this.setState({ isConnected: true });
           })
           .done();
+      StatusBar.setHidden(true);
   }
   render(){
     if(this.state.isConnected){

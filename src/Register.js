@@ -20,9 +20,17 @@ export default class Register extends Component<{}> {
           passr: '',
         }
   }
+  createToken(abc){
+    try {
+         AsyncStorage.setItem('@TOKEN_LOGIN', abc);
+        console.log(" Da tao token thanh cong ");
+    } catch(error) {
+        console.log(error);
+    }
+  }
   async go(){
            const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-           const { goBack } = this.props.navigation;
+           const { navigate } = this.props.navigation;
            const { email, phone, pass, passr } = this.state;
            if (reg.test(email) === true){
                 if(!isNaN(phone) && phone !== '' && phone.length >= 10)
@@ -41,14 +49,14 @@ export default class Register extends Component<{}> {
                         pass: pass,
                       }),
                     })
-                    .then((response) => response.json())
+                    .then((response) => response.text())
                     .then((responseJson) => {
-                        if(responseJson != "Đăng ký không thành công")
+                        console.log(responseJson);
+                        if(responseJson.toString().length > 30)
                         {
-                          console.log(responseJson);
-                          goBack();
+                          this.createToken(responseJson);
+                          navigate('Home');
                           Keyboard.dismiss();
-
                         }
                         else {
                           alert(responseJson)

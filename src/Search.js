@@ -3,12 +3,13 @@ import {
     View, StyleSheet, TouchableOpacity, TextInput,
     Dimensions, Text, FlatList, Image, Keyboard, ActivityIndicator
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import { addProduct } from './actions';
 import search from './images/search.png';
 import del from './images/delete.png';
-
+import cart from './images/cartmenu.png';
 const { width } = Dimensions.get('window');
-export default class Search extends Component {
+class Search extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -27,7 +28,6 @@ export default class Search extends Component {
             .done();
     }
     filter(text) {
-        //const data = dataCa.concat(dataRauCuQua).concat(dataGTGT);
         const {dataProduct} = this.state;
         const newData = dataProduct.filter((item) => {
             const itemData = item.TenSanPham.toUpperCase();
@@ -42,15 +42,18 @@ export default class Search extends Component {
     }
     renderItem(item) {
         const { product, img, name, price, unit, addcart } = styles;
+        const { navigate } = this.props.navigation;
         const url = "http://dongthappro.vn/images/";
         //const { navigate } = this.props.navigation;
         return (
             <View style={product}>
-              <Image source={{ uri: url + item.Hinh }} style={img} />
+              <TouchableOpacity onPress={()=>navigate('ProductDetail',{id: item.id, TenSanPham: item.TenSanPham})}>
+                <Image source={{ uri: url + item.Hinh }} style={img} />
+              </TouchableOpacity>
               <Text style={name}>{item.TenSanPham}</Text>
               <Text style={price}>{item.DonGia} vnđ</Text>
               <Text style={unit}>{item.DonViTinh}</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>this.props.addProduct(item.id, item.TenSanPham, item.DonGia, item.Hinh)}>
                 <Text style={addcart}>Thêm vào giỏ</Text>
               </TouchableOpacity>
             </View>
@@ -65,8 +68,8 @@ export default class Search extends Component {
         );
     }
     render() {
-        const {container, header, icon, input, textCancel, iconInputClose} = styles;
-        const { goBack } = this.props.navigation;
+        const {container, header, icon, input, textCancel, iconInputClose, badge} = styles;
+        const { goBack, navigate } = this.props.navigation;
         const { dataSanPham } = this.state;
         return (
             <View style={container}>
@@ -93,6 +96,12 @@ export default class Search extends Component {
                 <TouchableOpacity onPress={() => { goBack(); Keyboard.dismiss(); }}>
                     <Text style={textCancel}>Cancel</Text>
                 </TouchableOpacity>
+                <View style={{width:30}}>
+                  <TouchableOpacity style={{flexDirection:'row'}} onPress={() => navigate('MainContentCart')}>
+                    <Image style={icon} source={cart} />
+                    <Text style={badge}>{this.props.count}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={{ flex: 1 }}>
                   {
@@ -129,33 +138,32 @@ const styles = StyleSheet.create({
       height: 20,
     },
     input: {
-        width: width - (width / 4),
+        width: width - (width / 4) - 30,
         height: 40,
         paddingLeft: 15,
-        paddingRight: 40,
+        paddingRight: 30,
         borderRadius: 3,
         color: 'white',
         fontSize: 14,
         marginTop: 5,
-        //backgroundColor: 'black'
         fontFamily: 'Lobster-Regular',
     },
     textCancel: {
         color: '#FFF',
         fontSize: 14,
         fontFamily: 'Lobster-Regular',
+        paddingRight: 10,
     },
     iconInputClose: {
         position: 'absolute',
         top: 10,
-        right: 65,
+        right: 88,
         zIndex: 1,
         backgroundColor: 'transparent'
     },
     product:{
       width: (width / 2) - 4,
       margin: 2,
-
     },
     img: {
         width: (width / 2) - 4,
@@ -163,16 +171,13 @@ const styles = StyleSheet.create({
     },
     name:{
       color:'#2BBE4C',
-      //fontWeight:'bold',
       fontSize:14,
       textAlign:'center',
       fontFamily: 'Lobster-Regular',
     },
     price:{
-      //fontWeight:'bold',
       textAlign:'center',
       fontFamily: 'Lobster-Regular',
-      //fontSize:8,
     },
     unit:{
       textAlign:'center',
@@ -182,8 +187,6 @@ const styles = StyleSheet.create({
       backgroundColor:'#F03464',
       color:'#FFF',
       paddingVertical:5,
-      //fontWeight:'bold',
-      //fontStyle:'italic',
       marginTop:5,
       marginBottom:5,
       textAlign:'center',
@@ -196,4 +199,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
+    badge:{
+      position:'absolute',
+      top:0,
+      right:0,
+      backgroundColor:'#FFF',
+      color:'#F03464',
+      width:16,
+      height:16,
+      borderRadius:8,
+      fontSize:12,
+      textAlign:'center', alignItems:'center',
+    },
 });
+function mapStateToProps(state){
+  var kq = 0;
+  for(var i = 0 ; i < state.ArrayProducts.length; i++)
+  {
+    kq = kq + state.ArrayProducts[i]['soluong'];
+  }
+  return{
+    count: kq
+  }
+}
+export default connect(mapStateToProps,{addProduct})(Search);

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   product:{
     width: (width / 2) - 4,
     margin: 2,
-
+    backgroundColor:'#FFF',
   },
   img: {
       width: (width / 2) - 4,
@@ -123,16 +123,13 @@ const styles = StyleSheet.create({
   },
   name:{
     color:'#2BBE4C',
-    //fontWeight:'bold',
     fontSize:14,
     textAlign:'center',
     fontFamily: 'Lobster-Regular',
   },
   price:{
-    //fontWeight:'bold',
     textAlign:'center',
-      fontFamily: 'Lobster-Regular',
-    //fontSize:8,
+    fontFamily: 'Lobster-Regular',
   },
   unit:{
     textAlign:'center',
@@ -142,8 +139,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#F03464',
     color:'#FFF',
     paddingVertical:5,
-    //fontWeight:'bold',
-    //fontStyle:'italic',
     marginTop:5,
     marginBottom:5,
     textAlign:'center',
@@ -170,7 +165,6 @@ const styles = StyleSheet.create({
   },
 });
 function mapStateToProps(state){
-  //const reducer = (accumulator, currentValue) => accumulator + currentValue;
   var kq = 0;
   for(var i = 0 ; i < state.ArrayProducts.length; i++)
   {

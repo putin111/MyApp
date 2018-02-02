@@ -16,19 +16,8 @@ export default class Login extends Component<{}> {
         this.state = {
           email: '',
           pass: '',
-          token: 'this is token display',
+          //token: 'this is token display',
         }
-  }
-   async getToken(){
-    try {
-      //alert('acesstoken');
-      var acesstoken = await AsyncStorage.getItem('@TOKEN_LOGIN');
-      alert(acesstoken);
-      //this.setState({token: acesstoken});
-    } catch (e) {
-      console.log(e);
-    }
-
   }
   createToken(abc){
     try {
@@ -36,49 +25,59 @@ export default class Login extends Component<{}> {
         //console.log(abc);
          AsyncStorage.setItem('@TOKEN_LOGIN', abc);
         //this.setState({token: "Token was stored successfull"});
-        alert("Token was stored successfull ");
-
+        console.log(" Da tao token thanh cong ");
     } catch(error) {
         console.log(error);
     }
   }
   async go(){
-       const { goBack } = this.props.navigation;
+       const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+       const { navigate } = this.props.navigation;
        const { email, pass } = this.state;
+       if (reg.test(email) === true || (!isNaN(email) && email !== '' && email.length >= 10))
+       {
+         if(pass !== ''){
+           await fetch('http://113.161.198.106:8888/dongthappro.vn/json/login.php', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+             email: email,
+             pass: pass,
+             }),
+           })
+           .then((response) => response.text())
+           .then((responseJson) => {
+             console.log(responseJson);
+             if(responseJson != "Đăng nhập không thành công")
+             {
+               console.log(responseJson);
+               this.createToken(responseJson);
+               navigate('Home');
+               Keyboard.dismiss();
+             }
+             else {
+               alert(responseJson)
+             }
+           })
+           .catch((error) => {
+             console.error(error);
+           });
+         }
+         else {
+           alert('Bạn chưa nhập mật khẩu.');
+         }
+       }
+       else {
+         alert('Email hoặc số điện thoại chưa đúng.');
+       }
 
-        await fetch('http://113.161.198.106:8888/dongthappro.vn/json/login.php', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          pass: pass,
-        }),
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-          if(responseJson != "Đăng nhập không thành công")
-          {
-            console.log(responseJson);
-            //let token = responseJson;
-            //console.log(token);
-            this.createToken('responseJson');
-            //goBack();
-            //Keyboard.dismiss();
-          }
-          else {
-            alert(responseJson)
-          }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
  }
   render() {
     const { container, title, info, textinput, icon, line, button, buttontext, iconback } = styles;
-    const { navigate } = this.props.navigation;
+    const { navigate, goBack } = this.props.navigation;
     return (
       <View style={container}>
         <TouchableOpacity style={iconback} onPress={()=>{navigate('Home'); Keyboard.dismiss();}}>

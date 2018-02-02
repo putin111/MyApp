@@ -54,19 +54,18 @@ const styles = StyleSheet.create({
   category:{
     flexDirection:'row',
     flexWrap:'wrap',
-    marginTop: 2,
+    marginTop: 1,
   },
   dm:{
-    width: (width / 2) - 4,
+    width: (width / 2),
     height: ((width / 2) * 246) / 340,
-    margin: 2,
+    //margin: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
   text:{
     color: '#FFF',
     fontSize: 30,
-    //fontWeight: 'bold',
     fontFamily: 'Lobster-Regular',
   },
   activityIndicatorContainer: {

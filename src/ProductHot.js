@@ -52,12 +52,12 @@ class ProductHot extends Component {
         const { dataProduct } = this.state;
         return (
             <View style={container}>
-                <Text style={title}>Sản Phẩm Hot</Text>
+                <Text style={title}>Sản phẩm đặc sản</Text>
                 {
                     this.state.isFetching ? this.renderActivityIndicator() :
                         <FlatList
                             horizontal
-                            ItemSeparatorComponent={() => <View style={{ width: 1 }} />}
+                          //ItemSeparatorComponent={() => <View style={{ width: 1, backgroundColor:'#FFF' }} />}
                             data={dataProduct}
                             renderItem={({ item }) => this.renderItem(item)}
                             keyExtractor={(item, index) => index}
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 12,
         paddingLeft: 10,
-        //fontStyle:'italic',
         backgroundColor: '#F03464',
         paddingVertical: 3,
         borderBottomWidth: 1,
@@ -88,8 +87,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     product:{
-      //alignItems:'center',
-      //justifyContent:'center',
+      backgroundColor:'#FFF',
     },
     img: {
         width: 120,
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
     },
     name:{
       color:'#2BBE4C',
-      //fontWeight:'bold',
       fontSize:14,
       textAlign:'center',
       fontFamily: 'Lobster-Regular',
@@ -106,7 +103,6 @@ const styles = StyleSheet.create({
       fontWeight:'bold',
       textAlign:'center',
       fontFamily: 'Lobster-Regular',
-      //fontSize:8,
     },
     unit:{
       textAlign:'center',
